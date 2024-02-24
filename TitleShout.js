@@ -3,7 +3,8 @@
 /* global ll mc JsonConfigFile PermType ParamType */
 
 const pluginName = 'TitleShout';
-const pluginVer = [0, 0, 1];
+/** @type {[number, number, number]} */
+const pluginVer = [0, 0, 2];
 
 const dataPath = `plugins/${pluginName}`;
 const configFilePath = `${dataPath}/config.json`;
