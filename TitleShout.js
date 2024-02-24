@@ -60,36 +60,38 @@ function removeResource(player) {
   }
 }
 
-const cmdShout = mc.newCommand('shout', '发公屏标题', PermType.Any);
-cmdShout.mandatory('text', ParamType.RawText);
-cmdShout.overload(['text']);
-cmdShout.setCallback((_, origin, out, { text }) => {
-  const { player } = origin;
+mc.listen('onServerStarted', () => {
+  const cmdShout = mc.newCommand('shout', '发公屏标题', PermType.Any);
+  cmdShout.mandatory('text', ParamType.RawText);
+  cmdShout.overload(['text']);
+  cmdShout.setCallback((_, origin, out, { text }) => {
+    const { player } = origin;
 
-  if (!player) {
-    out.error('命令只能由玩家执行');
-    return false;
-  }
-  if (!checkResource(player)) {
-    out.error('需求物品不足');
-    return false;
-  }
-  if (!text) {
-    out.error('请输入你要广播的标题内容');
-    return false;
-  }
-
-  removeResource(player);
-  const title = `§6${player.realName} §a说：`;
-  for (const pl of mc.getOnlinePlayers()) {
-    if (!pl.isSimulatedPlayer()) {
-      pl.setTitle(text, 3); // 副标题
-      pl.setTitle(title, 2); // 主标题
+    if (!player) {
+      out.error('命令只能由玩家执行');
+      return false;
     }
-  }
-  return true;
+    if (!checkResource(player)) {
+      out.error('需求物品不足');
+      return false;
+    }
+    if (!text) {
+      out.error('请输入你要广播的标题内容');
+      return false;
+    }
+
+    removeResource(player);
+    const title = `§6${player.realName} §a说：`;
+    for (const pl of mc.getOnlinePlayers()) {
+      if (!pl.isSimulatedPlayer()) {
+        pl.setTitle(text, 3); // 副标题
+        pl.setTitle(title, 2); // 主标题
+      }
+    }
+    return true;
+  });
+  cmdShout.setup();
 });
-cmdShout.setup();
 
 ll.registerPlugin(
   pluginName,
