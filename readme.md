@@ -22,7 +22,7 @@
   "item": "minecraft:diamond",
 
   // 当 type 为 item 时，消耗的物品数量
-  "amount": 5
+  "amount": 5,
 }
 ```
 
